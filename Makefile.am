@@ -52,11 +52,21 @@ tpm2_la_LIBADD += $(TSS2_RC_LIBS)
 endif
 tpm2_la_LDFLAGS = -module -avoid-version -no-undefined -export-symbols-regex 'OSSL_provider_init' $(COMMON_LDFLAGS) $(CODE_COVERAGE_LDFLAGS)
 
-check_PROGRAMS = test/selftest
+check_PROGRAMS = test/selftest test/ec_genpkey_store_load test/rsa_genpkey_decrypt
 test_selftest_SOURCES = test/selftest.c
 test_selftest_CFLAGS = $(COMMON_CFLAGS)
 test_selftest_LDADD = $(CRYPTO_LIBS)
 test_selftest_LDFLAGS = $(COMMON_LDFLAGS)
+
+test_ec_genpkey_store_load_SOURCES = test/ec_genpkey_store_load.c
+test_ec_genpkey_store_load_CFLAGS = $(COMMON_CFLAGS)
+test_ec_genpkey_store_load_LDADD = $(CRYPTO_LIBS)
+test_ec_genpkey_store_load_LDFLAGS = $(COMMON_LDFLAGS)
+
+test_rsa_genpkey_decrypt_SOURCES = test/rsa_genpkey_decrypt.c
+test_rsa_genpkey_decrypt_CFLAGS = $(COMMON_CFLAGS)
+test_rsa_genpkey_decrypt_LDADD = $(CRYPTO_LIBS)
+test_rsa_genpkey_decrypt_LDFLAGS = $(COMMON_LDFLAGS)
 
 TESTS = $(TESTS_SHELL) $(check_PROGRAMS)
 
@@ -69,7 +79,8 @@ TESTS_SHELL = test/list.sh \
               test/rsa_createak_auth.sh \
               test/rsa_createak_sign_object.sh \
               test/rsa_createak_sign_handle.sh \
-              test/rsa_create_decrypt.sh \
+              test/rsa_create_decrypt_pkcs1.sh \
+              test/rsa_create_decrypt_oaep.sh \
               test/rsa_genpkey_x509_cert.sh \
               test/rsa_genpkey_x509_cmp.sh \
               test/rsa_genpkey_x509_cms.sh \
